@@ -6,6 +6,13 @@ body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color:#f5ebe0;
 }
+/* Q2: CSS modification example (background + font tweak) */
+body{
+    /* Q2: Slightly warmer background to show a "CSS change" in evaluation */
+    background-color:#f3e6d6;
+    /* Q2: Font fallbacks updated */
+    font-family: 'Segoe UI', 'Trebuchet MS', Tahoma, Geneva, Verdana, sans-serif;
+}
 .background{
     width: 100%;
     height: 100vh;

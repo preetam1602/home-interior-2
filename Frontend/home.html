@@ -5,6 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomeInterior-online</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Q8: Internal CSS for "Christmas/New Year Special Offers" section -->
+    <style>
+        /* Q8 (Internal CSS): Special Offers section styling */
+        .special-offers {
+            margin: 4rem auto;
+            max-width: 1100px;
+            padding: 2.5rem 1.5rem;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+            text-align: center;
+        }
+        .special-offers h1 {
+            font-size: 2rem;
+            color: #1A1A1A;
+            margin-bottom: 0.25rem;
+        }
+        .special-offers p {
+            color: #4A4A4A;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            max-width: 850px;
+            margin: 0.75rem auto 1.5rem;
+        }
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+        }
+        .offer-card {
+            border: 1px solid #eee;
+            border-radius: 14px;
+            padding: 1.25rem;
+            background: #faf7f2;
+        }
+        .offer-card h3 {
+            margin-bottom: 0.5rem;
+            color: #1A1A1A;
+        }
+        .offer-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #1A1A1A;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+    </style>
 </head>
 <body>
     <div class="background" id="home">
@@ -59,6 +110,10 @@
             <div class="line"></div>
             <h2>“A glimpse into the spaces we’ve transformed with thoughtful design and detail.”</h2>
         </div>
+        <!-- Q5: Button to hide/show a section (Portfolio) -->
+        <button type="button" id="togglePortfolioBtn" style="margin: 1rem auto 2rem; padding: 10px 18px; border-radius: 10px; border: 2px solid #1A1A1A; background: white; cursor: pointer; font-weight: 700;">
+            Hide/Show Portfolio
+        </button>
         <div class="project1">
             <img src="https://thewowstyle.com/wp-content/uploads/2015/06/home-interiors.jpg" alt="project1">
             <div class="review">
@@ -86,6 +141,33 @@
             <div class="review">
                 <h3>"The warm earthy tones make this room feel so cozy! The stone feature wall completely enhances the entire ambiance."</h3>
                 <h2>⭐⭐⭐⭐ (4/5) — Sahana D.</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Q8: New section "About Christmas/New Year Special Offers" -->
+    <section class="special-offers" id="special-offers">
+        <h1>About Christmas/New Year Special Offers</h1>
+        <div class="line"></div>
+        <p>
+            Celebrate the season with limited-time interior upgrade bundles—perfect for refreshing your home before guests arrive.
+            These offers are demo content for the Web Technology Lab evaluation.
+        </p>
+        <div class="offer-grid">
+            <div class="offer-card">
+                <div class="offer-badge">New Year Deal</div>
+                <h3>Free Design Consultation</h3>
+                <p>Get a 30-minute online consult with our designer team.</p>
+            </div>
+            <div class="offer-card">
+                <div class="offer-badge">Christmas Offer</div>
+                <h3>Lighting + Décor Combo</h3>
+                <p>Extra savings on décor lighting when purchased with accessories.</p>
+            </div>
+            <div class="offer-card">
+                <div class="offer-badge">Limited Time</div>
+                <h3>Wall Upgrade Pack</h3>
+                <p>Discount on premium paint + acoustic panels for living rooms.</p>
             </div>
         </div>
     </section>
@@ -133,6 +215,8 @@
                 <label for="feedback-message">Message</label>
                 <textarea placeholder="Your message" id="feedback-message" required></textarea>
                 <button type="submit">Submit</button>
+                <!-- Q4: New button clears the form and shows a thank-you message -->
+                <button type="button" id="clearFeedbackBtn">Clear Form</button>
                 <p id="feedbackmsg"></p>
             </form>
     </section>

@@ -11,6 +11,20 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
+/* Q5: Hide/Show a section (Portfolio) */
+var togglePortfolioBtn = document.getElementById("togglePortfolioBtn");
+var portfolioSection = document.getElementById("portfolio");
+if (togglePortfolioBtn && portfolioSection) {
+  togglePortfolioBtn.addEventListener("click", function () {
+    // Toggle display between "none" and default ("")
+    if (portfolioSection.style.display === "none") {
+      portfolioSection.style.display = "";
+    } else {
+      portfolioSection.style.display = "none";
+    }
+  });
+}
+
 
 /* 
    HOME PAGE – HERO BUTTON SCROLL */
@@ -71,6 +85,19 @@ if (bookingForm) {
 
 /*Feedback Form Validation*/
 var feedbackForm = document.getElementById("feedback");
+/* Q4: Clear form button + thank-you message (JS action on click) */
+var clearFeedbackBtn = document.getElementById("clearFeedbackBtn");
+if (clearFeedbackBtn && feedbackForm) {
+  clearFeedbackBtn.addEventListener("click", function () {
+    feedbackForm.reset();
+    var msg = document.getElementById("feedbackmsg");
+    if (msg) {
+      msg.className = "success";
+      msg.textContent = "Thank you! The form has been cleared.";
+    }
+  });
+}
+
 if (feedbackForm) {
   feedbackForm.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -132,8 +159,31 @@ if (feedbackForm) {
 
     response.className = "success";
     response.textContent = "Thank You!! For your feedback.";
-    alert("Thank You!! For your feedback.");
-    feedbackForm.reset();
+    /*
+      Q7: Save feedback to backend file and show success on front-end.
+      - Requires running backend/server.js (Node + Express).
+      - If backend is not running, we still show a message (so the UI doesn't break).
+    */
+    fetch("http://localhost:3001/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, phone, email, message })
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.ok) {
+          response.className = "success";
+          response.textContent = "Feedback saved successfully (stored in backend/feedback.txt).";
+          feedbackForm.reset();
+        } else {
+          response.className = "error";
+          response.textContent = "Feedback not saved (backend error).";
+        }
+      })
+      .catch(() => {
+        response.className = "error";
+        response.textContent = "Backend server not running. Start backend/server.js to save feedback.";
+      });
   });
 }
 
@@ -157,7 +207,9 @@ var color_material = [
   { id: 13, name: "Walnut Wood", price: 500 },
   { id: 14, name: "Slate Tile", price: 280 },
   { id: 15, name: "Travertine", price: 250 },
-  { id: 16, name: "Polished Concrete", price: 200 }
+  { id: 16, name: "Polished Concrete", price: 200 },
+  /* Q1: New product/service added and included in total cost calculation */
+  { id: 17, name: "Acoustic Wall Panels", price: 600 }
 ];
 
 
@@ -319,7 +371,21 @@ function displayCart() {
     `;
   });
 
-  cartDiv.innerHTML += `<hr><strong>Total: ₹${total}</strong>`;
+  /*
+    Q6: Discount logic
+    - If total is more than 1000, apply 10% off on the final total.
+  */
+  var discount = 0;
+  if (total > 1000) {
+    discount = total * 0.10;
+  }
+  var finalTotal = total - discount;
+
+  cartDiv.innerHTML += `<hr><strong>Subtotal: ₹${total.toFixed(2)}</strong>`;
+  if (discount > 0) {
+    cartDiv.innerHTML += `<br><strong>Discount (10%): -₹${discount.toFixed(2)}</strong>`;
+  }
+  cartDiv.innerHTML += `<br><strong>Total: ₹${finalTotal.toFixed(2)}</strong>`;
   displayBooking(cart);
 }
 
