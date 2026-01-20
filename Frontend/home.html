@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeInterior-online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background" id="home">
+        <div class="navigation">
+            <h1 class="logo">
+                Interior Design 
+            </h1>
+            <div class="navbar">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#design">Design</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+        <div class="content">
+            <h1>Welcome to our Interior Design</h1>
+            <p>We are a team of interior designers who are dedicated to creating beautiful and functional spaces.</p>
+            <button id="btn">Get Started</button>
+        </div>
+    </div>
+    <div class="about" id="about">
+        <h1 class="head">
+            About us
+        </h1>
+        <div class="line"></div>
+        <p>
+            We are a passionate team of interior designers dedicated to transforming everyday spaces into elegant, functional, and comfortable environments.
+            Our approach blends creativity with practicality, ensuring every design reflects your personality while enhancing the way you live.
+            From concept to completion, we focus on thoughtful details, quality materials, and timeless aesthetics to create spaces that feel like home.
+        </p>
+    </div>
+    <section class="design" id="design">
+        <h1 class="h1">How We Design Spaces</h1>
+        <div class="line"></div>
+        <h2 class="h2">“Creating spaces that are functional, stylish, and uniquely yours.”</h2>
+        <div class="division">
+            <div class="card1">
+                <h1 class="design-heading"><a href="material.html">Color & Material Selection</a></h1>
+                <h3 class="design-sub">“Choosing the right tones, textures, and finishes to enhance your space.”</h3>
+            </div>
+        
+            <div class="card2">
+                <h1 class="design-heading"><a href="furniture.html">Furniture & Décor Styling</a></h1>
+                <h3 class="design-sub">“Curating furniture, artwork, and decor that complements your interior theme.”</h3>
+            </div>
+        </div>
+    </section>
+    <section class="portfolio" id="portfolio">
+        <div class="head">
+            <h1>Our Featured Projects</h1>
+            <div class="line"></div>
+            <h2>“A glimpse into the spaces we’ve transformed with thoughtful design and detail.”</h2>
+        </div>
+        <div class="project1">
+            <img src="https://thewowstyle.com/wp-content/uploads/2015/06/home-interiors.jpg" alt="project1">
+            <div class="review">
+                <h3>“Absolutely love the transformation! The space feels brighter, more open, and perfectly balanced. The blend of clean lines and warm tones is just stunning.”</h3>
+                <h2>⭐⭐⭐⭐⭐ (5/5) — Ananya R.</h2>
+            </div>
+        </div>
+        <div class="project2">
+            <img src="https://thewowstyle.com/wp-content/uploads/2015/06/beautiful-living-room-home-interior-design-ideas.jpg" alt="project1">
+            <div class="review">
+                <h3>“The design completely transformed my space—minimal, bright, and so functional. The natural light and clean layout make the entire room feel twice as large.”</h3>
+                <h2>⭐⭐⭐⭐⭐ (5/5) - Aarav M.</h2>
+            </div>
+            
+        </div>
+        <div class="project3">
+            <img src="https://totalenvironment.in/wordpress/images/kitchen-design/9.jpg" alt="project1">
+            <div class="review">
+                <h3>"The kitchen design is both elegant and highly functional. The island is perfect for cooking and socializing, and the lighting fixtures add a refined touch. I couldn't be happier!"</h3>
+                <h2>⭐⭐⭐⭐⭐ (5/5) — Nisha K.</h2>
+            </div>
+        </div>
+        <div class="project4">
+            <img src="https://www.decorilla.com/online-decorating/wp-content/uploads/2023/05/Stunning-contemporary-bedroom-interior-design-ideas-by-Raneem-K.jpg" alt="project1">
+            <div class="review">
+                <h3>"The warm earthy tones make this room feel so cozy! The stone feature wall completely enhances the entire ambiance."</h3>
+                <h2>⭐⭐⭐⭐ (4/5) — Sahana D.</h2>
+            </div>
+        </div>
+    </section>
+            <section>
+                <h2 style="text-align: center;
+                font-size: 2rem;">Order Summary</h2>
+                <div id="cart"></div>
+            </section>
+    <section class="contact" id="contact">
+        <h1>Contact & Booking</h1>
+        <div class="line"></div>
+        <h2>“Have a design idea or project in mind? Reach out — I’d love to help you shape your dream space.”</h2>
+        <div class="register">
+            <div class="contact-details">
+                <h2>Contact Details</h2>
+                <p>Email: designstudio@gmail.com</p>
+                <p>Phone: +91 98765 43210</p>
+                <p>Location: Bangalore, India</p>
+            </div>
+            <form class="booking" id="booking">
+                <label>Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+                <label>Phone Number</label>
+                <input type="text" id="phone" placeholder="Enter phone number" required>
+                <label>Email</label>
+                <input type="text" id="email" placeholder="Enter your email" required>
+                <textarea placeholder="Your message" id="message"></textarea>
+                <button type="submit">Confirm Booking</button>
+                <p id="responsemsg"></p>
+            </form>
+        </div>
+    </section>
+    <!-- Feedback Section -->
+    <section class="Feedback">
+        <h1>Customer Feedback</h1>
+        <div class="line"></div>
+        <h2>“We value your feedback! Please share your thoughts to help us improve our services.”</h2>
+        <form class="feedback" id="feedback" novalidate>
+                <label for="feedback-name">Name</label>
+                <input type="text" id="feedback-name" placeholder="Enter your name" required>
+                <label for="feedback-phone">Phone Number</label>
+                <input type="tel" id="feedback-phone" placeholder="Enter phone number" required>
+                <label for="feedback-email">Email</label>
+                <input type="email" id="feedback-email" placeholder="Enter your email" required>
+                <label for="feedback-message">Message</label>
+                <textarea placeholder="Your message" id="feedback-message" required></textarea>
+                <button type="submit">Submit</button>
+                <p id="feedbackmsg"></p>
+            </form>
+    </section>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="material.html">Color & Material Selection</a></li>
+                        <li><a href="furniture.html">Furniture & Décor Styling</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Book Your Consultation</h3>
+                    <p>Ready to transform your space? Get in touch with us today!</p>
+                    <p><strong>Email:</strong> designstudio@gmail.com</p>
+                    <p><strong>Phone:</strong> +91 98765 43210</p>
+                    <p><strong>Location:</strong> Bangalore, India</p>
+                    <p style="margin-top: 1rem;"><a href="#contact" style="color: #C8B499; text-decoration: underline;">Book Now →</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Interior Design. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
