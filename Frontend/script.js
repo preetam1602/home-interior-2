@@ -322,6 +322,9 @@ function getDiscountRate(id) {
   if (id >= 109 && id <= 116) {
     return 0.05; // 5% decor
   }
+  if (id === 17){
+    return 0.07;
+  }
   return 0; // no discount
 }
 
