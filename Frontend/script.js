@@ -272,6 +272,93 @@ function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
+/*
+  COUPON CODE DISCOUNT FOR COLOR_MATERIAL
+  - Valid coupon codes apply discount only to color_material items (ids 1-17)
+  - Coupon is stored in localStorage to persist across page reloads
+*/
+var activeCoupon = null;
+var couponDiscountRate = 0;
+
+// Load active coupon from localStorage
+function loadCoupon() {
+  var savedCoupon = localStorage.getItem("activeCoupon");
+  if (savedCoupon) {
+    activeCoupon = savedCoupon;
+    // Set discount rate based on coupon code
+    if (activeCoupon === "COLOR20") {
+      couponDiscountRate = 0.20; // 20% off
+    } else if (activeCoupon === "COLOR15") {
+      couponDiscountRate = 0.15; // 15% off
+    } else if (activeCoupon === "COLOR10") {
+      couponDiscountRate = 0.10; // 10% off
+    }
+  }
+}
+
+// Save active coupon to localStorage
+function saveCoupon() {
+  if (activeCoupon) {
+    localStorage.setItem("activeCoupon", activeCoupon);
+  } else {
+    localStorage.removeItem("activeCoupon");
+  }
+}
+
+// Apply coupon code
+function applyCoupon() {
+  var couponInput = document.getElementById("couponCode");
+  var couponMsg = document.getElementById("couponMsg");
+  
+  if (!couponInput || !couponMsg) return;
+  
+  var code = couponInput.value.trim().toUpperCase();
+  
+  // Valid coupon codes for color_material discount
+  var validCoupons = {
+    "COLOR20": 0.20, // 20% off
+    "COLOR15": 0.15, // 15% off
+    "COLOR10": 0.10  // 10% off
+  };
+  
+  if (code === "") {
+    couponMsg.textContent = "Please enter a coupon code.";
+    couponMsg.style.color = "red";
+    return;
+  }
+  
+  if (validCoupons[code]) {
+    activeCoupon = code;
+    couponDiscountRate = validCoupons[code];
+    saveCoupon();
+    couponMsg.textContent = "Coupon applied! " + (couponDiscountRate * 100) + "% discount on Color & Material items.";
+    couponMsg.style.color = "green";
+    displayCart(); // Refresh cart to show discount
+  } else {
+    activeCoupon = null;
+    couponDiscountRate = 0;
+    saveCoupon();
+    couponMsg.textContent = "Invalid coupon code. Valid codes: COLOR20, COLOR15, COLOR10";
+    couponMsg.style.color = "red";
+    displayCart(); // Refresh cart to remove discount
+  }
+}
+
+// Remove coupon
+function removeCoupon() {
+  activeCoupon = null;
+  couponDiscountRate = 0;
+  saveCoupon();
+  var couponInput = document.getElementById("couponCode");
+  var couponMsg = document.getElementById("couponMsg");
+  if (couponInput) couponInput.value = "";
+  if (couponMsg) {
+    couponMsg.textContent = "Coupon removed.";
+    couponMsg.style.color = "gray";
+  }
+  displayCart();
+}
+
 function addToCart(id) {
   var product = findProduct(id);
   if (!product) return;
@@ -350,6 +437,13 @@ function displayCart() {
 
     var discountRate = getDiscountRate(item.id);
     var discountedPrice = product.price - (product.price * discountRate);
+    
+    // Apply coupon discount only to color_material items (ids 1-17)
+    var originalDiscountedPrice = discountedPrice;
+    if (couponDiscountRate > 0 && item.id >= 1 && item.id <= 17) {
+      discountedPrice = discountedPrice - (discountedPrice * couponDiscountRate);
+    }
+    
     var itemTotal = discountedPrice * item.qty;
 
     total += itemTotal;
@@ -359,11 +453,11 @@ function displayCart() {
         <strong>${product.name}</strong><br>
 
         ${
-          discountRate > 0
-            ? `<del>₹${product.price}</del> <strong>₹${discountedPrice}</strong>`
+          discountRate > 0 || (couponDiscountRate > 0 && item.id >= 1 && item.id <= 17)
+            ? `<del>₹${product.price}</del> <strong>₹${discountedPrice.toFixed(2)}</strong>${couponDiscountRate > 0 && item.id >= 1 && item.id <= 17 ? ' <span style="color: green; font-size: 0.9rem;">(Coupon Applied)</span>' : ''}`
             : `₹${product.price}`
         }
-        × ${item.qty} = <strong>₹${itemTotal}</strong><br><br>
+        × ${item.qty} = <strong>₹${itemTotal.toFixed(2)}</strong><br><br>
 
         <button onclick="decreaseQty(${item.id})">−</button>
         <span style="margin:0 10px;font-weight:bold;">${item.qty}</span>
@@ -385,10 +479,35 @@ function displayCart() {
   var finalTotal = total - discount;
 
   cartDiv.innerHTML += `<hr><strong>Subtotal: ₹${total.toFixed(2)}</strong>`;
+  
+  // Show coupon discount if applied
+  if (activeCoupon && couponDiscountRate > 0) {
+    var colorMaterialTotal = 0;
+    cart.forEach(item => {
+      if (item.id >= 1 && item.id <= 17) {
+        var product = findProduct(item.id);
+        if (product) {
+          var discountRate = getDiscountRate(item.id);
+          var discountedPrice = product.price - (product.price * discountRate);
+          colorMaterialTotal += discountedPrice * item.qty;
+        }
+      }
+    });
+    var couponDiscount = colorMaterialTotal * couponDiscountRate;
+    cartDiv.innerHTML += `<br><strong>Coupon Discount (${activeCoupon} - ${(couponDiscountRate * 100)}% on Color & Material): -₹${couponDiscount.toFixed(2)}</strong>`;
+    finalTotal -= couponDiscount;
+  }
+  
   if (discount > 0) {
     cartDiv.innerHTML += `<br><strong>Discount (10%): -₹${discount.toFixed(2)}</strong>`;
   }
   cartDiv.innerHTML += `<br><strong>Total: ₹${finalTotal.toFixed(2)}</strong>`;
+  
+  // Add remove coupon button if coupon is active
+  if (activeCoupon) {
+    cartDiv.innerHTML += `<br><button onclick="removeCoupon()" style="margin-top: 0.5rem; padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">Remove Coupon</button>`;
+  }
+  
   displayBooking(cart);
 }
 
@@ -430,5 +549,22 @@ function displayBooking(cart) {
 /* INIT */
 document.addEventListener("DOMContentLoaded", function () {
   loadCart();
+  loadCoupon(); // Load active coupon if any
   displayCart();
+  
+  // Attach coupon apply button event listener
+  var applyCouponBtn = document.getElementById("applyCouponBtn");
+  if (applyCouponBtn) {
+    applyCouponBtn.addEventListener("click", applyCoupon);
+  }
+  
+  // Allow Enter key to apply coupon
+  var couponInput = document.getElementById("couponCode");
+  if (couponInput) {
+    couponInput.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        applyCoupon();
+      }
+    });
+  }
 });
